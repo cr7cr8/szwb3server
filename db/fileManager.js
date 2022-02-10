@@ -20,14 +20,16 @@ function createFileManager(connDB, collectionName) {
     deleteFileByUserName: function (req, res, next) { deleteFileByUserName(connDB, collectionName, req, res, next) },
     isFileThere: function (req, res, next) { return isFileThere(connDB, collectionName, req, res, next) },
 
-
     downloadFileByName: function (req, res, next) { downloadFileByName(connDB, collectionName, req, res, next) },
     deleteFileByPostID: function (req, res, next) { deleteFileByPostID(connDB, collectionName, req, res, next) },
+    getSmallImageArray: function (req, res, next) { return getSmallImageArray(connDB, collectionName, req, res, next) },
+    getSmallImageArray2: function (req, res, next) { return getSmallImageArray2(connDB, collectionName, req, res, next) },
+
     connDB,
     collectionName,
 
   }
-} 
+}
 
 function checkConnState(connDB, collectionName, req, res, next) {
 
@@ -122,6 +124,12 @@ function downloadFile(connDB, collectionName, req, res, next) {
   if (req.params.emojiname) {
     querryObj = { 'filename': req.params.emojiname }
   }
+
+  if (req.params.filename) {
+    querryObj = { 'filename': req.params.filename }
+  }
+
+
 
   const cursor = gfs.find({ ...querryObj }, { limit: 1 })
   // const cursor = gfs.find({ 'metadata.ownerName': req.params.username, /* "metadata.owner": req.user.username */ }, { limit: 1 })
@@ -300,11 +308,19 @@ function deleteFileById(connDB, collectionName, req, res, next) {
     console.log("all requested files deleted")
     next()
   })
-
-
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 function deleteFileByPostID(connDB, collectionName, req, res, next) {
 
@@ -338,6 +354,96 @@ function deleteFileByPostID(connDB, collectionName, req, res, next) {
 
 
 
+
+
+function getSmallImageArray(connDB, collectionName, req, res, next,) {
+
+
+  console.log(req.files.length)
+  req.files.forEach(function (imgFile, index) {
+
+    console.log(index)
+
+    Jimp.read(imgFile.buffer).then(function (image) {
+
+
+
+
+      const { width, height } = image.bitmap;
+      //req.files[index].oriantation = width >= height ? "horizontal" : "verticle"
+
+      console.log("image width and height", width, height)
+
+      if (width * height >= 400 * 400) {
+
+        image.resize(width >= height ? 400 : Jimp.AUTO, height >= width ? 400 : Jimp.AUTO)
+          .quality(60)
+          .getBufferAsync(image.getMIME())
+          .then(function (imgBuffer) {
+
+            req.files[index].buffer = imgBuffer;
+            req.files[index].size = imgBuffer.length;
+
+            if (index === req.files.length - 1) { next() }
+          }).catch(err => { console.log("error in converting small pic image ", err) })
+
+      }
+      else {
+        if (index === req.files.length - 1) { next() }
+      }
+    }).catch(err => { console.log("error in Jimp reading file array ", err) })
+
+
+  })
+
+}
+
+function getSmallImageArray2(connDB, collectionName, req, res, next,) {
+
+
+  console.log(req.files.length)
+  req.files.forEach(function (imgFile, index) {
+
+    console.log(index)
+
+    Jimp.read(imgFile.buffer).then(function (image) {
+
+
+
+
+      const { width, height } = image.bitmap;
+      //req.files[index].oriantation = width >= height ? "horizontal" : "verticle"
+
+      console.log("image width and height", width, height)
+
+      if (width * height >= 800 * 800) {
+
+        image.resize(width >= height ? 800 : Jimp.AUTO, height >= width ? 800 : Jimp.AUTO)
+          .quality(60)
+          .getBufferAsync(image.getMIME())
+          .then(function (imgBuffer) {
+
+            req.files[index].buffer = imgBuffer;
+            req.files[index].size = imgBuffer.length;
+
+            if (index === req.files.length - 1) { next() }
+          }).catch(err => { console.log("error in converting small pic image ", err) })
+
+      }
+      else {
+        if (index === req.files.length - 1) { next() }
+      }
+    }).catch(err => { console.log("error in Jimp reading file array ", err) })
+
+
+  })
+
+}
+
+
+
+
+
 module.exports = [
 
   {
@@ -347,21 +453,21 @@ module.exports = [
     deleteFileById_: deleteFileById,
 
   },
-  {
-    ...createFileManager(connSzwb3DB, "pic_uploads"),
-    uploadFile_: uploadFile,
-    downloadFile_: downloadFile,
-    deleteFileById_: deleteFileById,
+  // {
+  //   ...createFileManager(connSzwb3DB, "pic_uploads"),
+  //   uploadFile_: uploadFile,
+  //   downloadFile_: downloadFile,
+  //   deleteFileById_: deleteFileById,
 
-  },
-  {
-    ...createFileManager(connSzwb3DB, "emoji"),
+  // },
+  // {
+  //   ...createFileManager(connSzwb3DB, "emoji"),
 
-  },
-  {
-    ...createFileManager(connSzwb3DB, "avatar"),
+  // },
+  // {
+  //   ...createFileManager(connSzwb3DB, "avatar"),
 
-  }
+  // }
 
 ]
 

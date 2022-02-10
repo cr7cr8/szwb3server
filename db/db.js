@@ -5,16 +5,16 @@ mongoose.connection.on('error', function (err) {
  // console.log("aaaaaaaaaaaaaaa")
 });
 
-const { connSzwb2DB, connEmojiDB, connPictureDB, connParam } = {
+const { connSzwb3DB, connEmojiDB, connPictureDB, connParam } = {
 
   //EmojiDB: "mongodb+srv://boss:ABCabc123@cluster0-lsf8g.azure.mongodb.net/EmojiDB?retryWrites=true&w=majority",
   szwb3DB: "mongodb+srv://boss:ABCabc123@cluster0-lsf8g.azure.mongodb.net/szwb3?retryWrites=true&w=majority",
   //pictureDB: "mongodb+srv://boss:ABCabc123@cluster0-lsf8g.azure.mongodb.net/pictureDB?retryWrites=true&w=majority",
 
-  connParam: { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false,/*poolSize:10*/ },
+  connParam: { useNewUrlParser: true, useUnifiedTopology: true, /*poolSize:10*/ },
 
-  get connSzwb2DB() {
-    return mongoose.createConnection(this.szwb2DB, this.connParam)
+  get connSzwb3DB() {
+    return mongoose.createConnection(this.szwb3DB, this.connParam)
   },
 
   // get connEmojiDB() {
@@ -29,7 +29,7 @@ const { connSzwb2DB, connEmojiDB, connPictureDB, connParam } = {
 
 
 
-
+ 
 
 function wrapAndMerge(...args) {
 
