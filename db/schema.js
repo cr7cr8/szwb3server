@@ -46,6 +46,7 @@ userSchema.virtual("userArticle", {
 
 const voteBlockSchema = new mongoose.Schema({
 
+  _id: { type: String, required: true },
   voteTopic: { type: String },
   voteArr: { type: [String], default: ["Choice 1"] },
   voteCountArr: { type: [Number], default: [0] },

@@ -32,8 +32,10 @@ router.post("/", function (req, res, next) {
   // })
 
   VoteBlock.create({
-    ...req.body, expireTime, voteCountArr: req.body.voteArr.map(item => Number(Number(0).toFixed(0)
-    ))
+    _id: req.body.postID,
+    ...req.body,
+    expireTime,
+    voteCountArr: req.body.voteArr.map(item => Number(Number(0).toFixed(0))),
   }).then(doc => {
     //  console.log(doc)
     res.json(doc)
@@ -41,6 +43,31 @@ router.post("/", function (req, res, next) {
 
 })
 
+router.put("/", function (req, res, next) {
+
+  console.log(req.body.userName)
+
+  res.json(req.body.userName)
+
+
+  const arrPos = "voteCountArr." + req.body.choicePos
+
+  console.log("====>",arrPos)
+
+  VoteBlock.updateMany({ _id: req.body.postID }, {
+   
+
+    "$inc": { [arrPos]: 1 }, //"$inc": { "voteCountArr.$[keyName]": 1 },
+
+    "$addToSet": { whoVoted: req.body.userName }
+
+
+  }).then((doc) => {
+    console.log(doc)
+
+  })
+
+})
 
 
 // router.get("/register", function (req, res, next) {
