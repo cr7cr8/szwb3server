@@ -20,6 +20,7 @@ const userSchema = new mongoose.Schema({
   }
 )
 
+
 const articleSchema = new mongoose.Schema({
 
   ownerName: { type: String },
@@ -35,14 +36,9 @@ const articleSchema = new mongoose.Schema({
 })
 
 
-userSchema.virtual("userArticle", {
-  localField: "userName",   //function(user){  console.log("***",user.friendsList[0]);  return user.friendsList[0] },
-  //  localField:  function(user){  console.log("***",user.friendsList[0]);  return user.friendsList[1] },
-  foreignField: "ownerName",
-  //  foreignField:function(poster){ console.log("***",poster); return "bbb" },
-  ref: "articles",
-  justOne: false
-})
+
+
+
 
 const voteBlockSchema = new mongoose.Schema({
 
@@ -63,7 +59,41 @@ const voteBlockSchema = new mongoose.Schema({
   //  timestamps: true, 
 })
 
+const commentSchema = new mongoose.Schema({
 
+  ownerName: { type: String },
+  content: { type: String },
+  postID: { type: String },
+  commentID: { type: String, required: true },
+  postingTime: { type: Date, default: Date.now },
+
+
+}, {
+  toObject: { virtuals: true },
+  collection: "comments",
+  //  timestamps: true, 
+})
+
+
+
+
+
+userSchema.virtual("userArticle", {
+  localField: "userName",   //function(user){  console.log("***",user.friendsList[0]);  return user.friendsList[0] },
+  //  localField:  function(user){  console.log("***",user.friendsList[0]);  return user.friendsList[1] },
+  foreignField: "ownerName",
+  //  foreignField:function(poster){ console.log("***",poster); return "bbb" },
+  ref: "articles",
+  justOne: false
+})
+
+articleSchema.virtual("commentNum", {
+  localField: "postID",
+  foreignField: "postID",
+  ref: "comments",
+  count:true,
+  justOne: false,
+})
 
 
 
@@ -71,5 +101,6 @@ const voteBlockSchema = new mongoose.Schema({
 const User = connSzwb3DB.model("users", userSchema);
 const Article = connSzwb3DB.model("articles", articleSchema);
 const VoteBlock = connSzwb3DB.model("voteBlocks", voteBlockSchema);
+const Comment = connSzwb3DB.model("comments", commentSchema);
 
-module.exports = { User, Article, VoteBlock }
+module.exports = { User, Article, VoteBlock, Comment }

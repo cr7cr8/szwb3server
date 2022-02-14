@@ -3,7 +3,7 @@ const app = express();
 const article = require("./router/article")
 const picture = require("./router/picture")
 const voteBlock = require("./router/voteBlock")
-
+const comment = require("./router/comment")
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -15,10 +15,11 @@ if (!process.env.port) {
 
 //app.use("/api/article", article)
 
-app.use("/api/article", article)
+
 app.use("/api/picture", picture)
 app.use("/api/voteBlock", voteBlock)
-
+app.use("/api/comment", comment)
+app.use("/api/article", article)
 
 // app.get("/", function (req, res, next) {
 //   res.send("fdsf")
