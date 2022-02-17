@@ -60,20 +60,29 @@ const voteBlockSchema = new mongoose.Schema({
 })
 
 const commentSchema = new mongoose.Schema({
-
   ownerName: { type: String },
   content: { type: String },
   postID: { type: String },
   commentID: { type: String, required: true },
   postingTime: { type: Date, default: Date.now },
-
-
 }, {
   toObject: { virtuals: true },
   collection: "comments",
   //  timestamps: true, 
 })
 
+const subCommentSchema = new mongoose.Schema({
+  ownerName: { type: String },
+  content: { type: String },
+  postID: { type: String },
+  commentID: { type: String, required: true },
+  subCommentID: { type: String, required: true },
+  postingTime: { type: Date, default: Date.now },
+}, {
+  toObject: { virtuals: true },
+  collection: "subComments",
+  //  timestamps: true, 
+})
 
 
 
@@ -91,10 +100,17 @@ articleSchema.virtual("commentNum", {
   localField: "postID",
   foreignField: "postID",
   ref: "comments",
-  count:true,
+  count: true,
   justOne: false,
 })
 
+commentSchema.virtual("subCommentNum", {
+  localField: "commentID",
+  foreignField: "commentID",
+  ref: "subComments",
+  count: true,
+  justOne: false,
+})
 
 
 
@@ -102,5 +118,7 @@ const User = connSzwb3DB.model("users", userSchema);
 const Article = connSzwb3DB.model("articles", articleSchema);
 const VoteBlock = connSzwb3DB.model("voteBlocks", voteBlockSchema);
 const Comment = connSzwb3DB.model("comments", commentSchema);
+const SubComment = connSzwb3DB.model("subComments", subCommentSchema);
 
-module.exports = { User, Article, VoteBlock, Comment }
+
+module.exports = { User, Article, VoteBlock, Comment, SubComment }

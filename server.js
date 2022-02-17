@@ -4,6 +4,7 @@ const article = require("./router/article")
 const picture = require("./router/picture")
 const voteBlock = require("./router/voteBlock")
 const comment = require("./router/comment")
+const subComment = require("./router/subComment")
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -20,6 +21,7 @@ app.use("/api/picture", picture)
 app.use("/api/voteBlock", voteBlock)
 app.use("/api/comment", comment)
 app.use("/api/article", article)
+app.use("/api/subComment", subComment)
 
 // app.get("/", function (req, res, next) {
 //   res.send("fdsf")

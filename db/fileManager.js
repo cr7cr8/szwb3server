@@ -18,6 +18,8 @@ function createFileManager(connDB, collectionName) {
     uploadFile: function (req, res, next) { uploadFile(connDB, collectionName, req, res, next) },
     downloadFile: function (req, res, next) { downloadFile(connDB, collectionName, req, res, next) },
     deleteFileByUserName: function (req, res, next) { deleteFileByUserName(connDB, collectionName, req, res, next) },
+    
+
     isFileThere: function (req, res, next) { return isFileThere(connDB, collectionName, req, res, next) },
 
     downloadFileByName: function (req, res, next) { downloadFileByName(connDB, collectionName, req, res, next) },
@@ -290,6 +292,38 @@ function deleteFileByUserName(connDB, collectionName, req, res, next) {
 }
 
 
+
+function deleteFileByPostID(connDB, collectionName, req, res, next) {
+
+  var gfs = new mongoose.mongo.GridFSBucket(connDB.db, {
+    chunkSizeBytes: 255 * 1024,
+    bucketName: collectionName,
+  });
+  const cursor = gfs.find({ 'metadata.postID': req.body.postID, /* "metadata.owner": req.user.username */ }, { limit: 1000 })
+
+  cursor.toArray().then(function (fileArr) {
+    if (fileArr.length === 0) { next() }
+    fileArr.forEach(function (doc, index) {
+      gfs.delete(mongoose.Types.ObjectId(doc._id), function (err) {
+        err
+          ? console.log(err)
+          : console.log("file " + doc.filename + " " + doc.metadata.postID + " deleted");
+        if (fileArr.length - 1 === index) {
+          next()
+        }
+
+      })
+
+    })
+
+  })
+
+}
+
+
+
+
+
 function deleteFileById(connDB, collectionName, req, res, next) {
 
   var gfs = new mongoose.mongo.GridFSBucket(connDB.db, {
@@ -319,38 +353,6 @@ function deleteFileById(connDB, collectionName, req, res, next) {
 
 
 
-
-
-
-function deleteFileByPostID(connDB, collectionName, req, res, next) {
-
-  const regex = new RegExp(`^${req.params.postid}_[\s\S]*`);
-  var gfs = new mongoose.mongo.GridFSBucket(connDB.db, {
-    chunkSizeBytes: 255 * 1024,
-    bucketName: collectionName,
-  });
-  const cursor = gfs.find({ 'metadata.picName': { $regex: regex }, }, { limit: 321 })
-
-
-  cursor.toArray().then(function (fileArr) {
-    if (fileArr.length === 0) { next() }
-    fileArr.forEach(function (doc, index) {
-      gfs.delete(mongoose.Types.ObjectId(doc._id), function (err) {
-        err
-          ? console.log(err)
-          : console.log("file " + doc.filename + " " + doc.metadata.ownerName + " deleted");
-        if (fileArr.length - 1 === index) {
-          next()
-        }
-
-      })
-
-    })
-
-  })
-
-
-}
 
 
 

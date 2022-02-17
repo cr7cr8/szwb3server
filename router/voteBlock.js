@@ -45,14 +45,14 @@ router.post("/", function (req, res, next) {
 
 router.put("/", function (req, res, next) {
 
-  console.log(req.body.userName)
+ // console.log(req.body.userName)
 
   res.json(req.body.userName)
 
 
   const arrPos = "voteCountArr." + req.body.choicePos
 
-  console.log("====>",arrPos)
+ // console.log("====>",arrPos)
 
   VoteBlock.updateMany({ _id: req.body.postID }, {
    
@@ -63,7 +63,7 @@ router.put("/", function (req, res, next) {
 
 
   }).then((doc) => {
-    console.log(doc)
+   // console.log(doc)
 
   })
 
