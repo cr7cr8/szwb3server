@@ -33,26 +33,38 @@ router.get("/", async function (req, res, next) {
   //  const aaa = await Article.findOne({}).populate({path: 'articleComment', model: 'comments'}).exec()
   //  console.log("---",aaa)
 })
- 
+
+router.get("/findOne/:postID", function (req, res, next) {
+
+  console.log("hihihihi")
+  Article.findOne({ postID: req.params.postID }).populate("commentNum").exec()
+
+    .then((doc) => {
+
+      console.log(doc)
+      res.json( {...doc._doc, commentNum: doc.commentNum} )
+    })
+
+})
 
 router.get("/getOne/:beforeTime?", async function (req, res, next) {
- // console.log(req.params.beforeTime)
-   req.params.beforeTime = req.params.beforeTime || new Date()
-    if(req.params.beforeTime==="undefined"){
-      req.params.beforeTime = new Date()
-    }
-  
-   console.log(req.params.beforeTime)
+  // console.log(req.params.beforeTime)
+  req.params.beforeTime = req.params.beforeTime || new Date()
+  if (req.params.beforeTime === "undefined") {
+    req.params.beforeTime = new Date()
+  }
 
-   Article.find({ postingTime: { $lt: req.params.beforeTime } }).sort({ postingTime: -1 }).limit(1).populate("commentNum").exec()
+  //console.log(req.params.beforeTime)
 
-     .then((docs) => {
+  Article.find({ postingTime: { $lt: req.params.beforeTime } }).sort({ postingTime: -1 }).limit(1).populate("commentNum").exec()
 
-       res.json(docs.map(doc => { return { ...doc._doc, commentNum: doc.commentNum } }))
+    .then((docs) => {
 
-     })
+      res.json(docs.map(doc => { return { ...doc._doc, commentNum: doc.commentNum } }))
 
-  
+    })
+
+
   //  const aaa = await Article.findOne({}).populate({path: 'articleComment', model: 'comments'}).exec()
   //  console.log("---",aaa)
 })
