@@ -41,7 +41,7 @@ router.get("/findOne/:postID", function (req, res, next) {
 
     .then((doc) => {
 
-      console.log(doc)
+    //  console.log(doc)
       res.json( {...doc._doc, commentNum: doc.commentNum} )
     })
 
