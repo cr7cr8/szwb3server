@@ -36,7 +36,7 @@ router.get("/", async function (req, res, next) {
 
 router.get("/findOne/:postID", function (req, res, next) {
 
-  console.log("hihihihi")
+
   Article.findOne({ postID: req.params.postID }).populate("commentNum").exec()
 
     .then((doc) => {
