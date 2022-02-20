@@ -41,8 +41,8 @@ router.get("/findOne/:postID", function (req, res, next) {
 
     .then((doc) => {
 
-    //  console.log(doc)
-      res.json( {...doc._doc, commentNum: doc.commentNum} )
+      //  console.log(doc)
+      res.json({ ...doc._doc, commentNum: doc.commentNum })
     })
 
 })
@@ -57,6 +57,30 @@ router.get("/getOne/:beforeTime?", async function (req, res, next) {
   //console.log(req.params.beforeTime)
 
   Article.find({ postingTime: { $lt: req.params.beforeTime } }).sort({ postingTime: -1 }).limit(1).populate("commentNum").exec()
+
+    .then((docs) => {
+
+      res.json(docs.map(doc => { return { ...doc._doc, commentNum: doc.commentNum } }))
+
+    })
+
+
+  //  const aaa = await Article.findOne({}).populate({path: 'articleComment', model: 'comments'}).exec()
+  //  console.log("---",aaa)
+})
+
+router.get("/getPersonOne/:ownerName/:beforeTime?", async function (req, res, next) {
+  // console.log(req.params.beforeTime)
+  req.params.beforeTime = req.params.beforeTime || new Date()
+  if (req.params.beforeTime === "undefined") {
+    req.params.beforeTime = new Date()
+  }
+
+  console.log(req.params.ownerName)
+
+  //console.log(req.params.beforeTime)
+
+  Article.find({ postingTime: { $lt: req.params.beforeTime }, ownerName:req.params.ownerName }).sort({ postingTime: -1 }).limit(1).populate("commentNum").exec()
 
     .then((docs) => {
 
