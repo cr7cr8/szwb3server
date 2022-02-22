@@ -6,6 +6,8 @@ const voteBlock = require("./router/voteBlock")
 const comment = require("./router/comment")
 const subComment = require("./router/subComment")
 
+const user = require("./router/user")
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
@@ -22,6 +24,9 @@ app.use("/api/voteBlock", voteBlock)
 app.use("/api/comment", comment)
 app.use("/api/article", article)
 app.use("/api/subComment", subComment)
+app.use("/api/user", user)
+
+
 
 // app.get("/", function (req, res, next) {
 //   res.send("fdsf")

@@ -272,6 +272,8 @@ function deleteFileByUserName(connDB, collectionName, req, res, next) {
   });
   const cursor = gfs.find({ 'metadata.ownerName': req.user.userName, /* "metadata.owner": req.user.username */ }, { limit: 1000 })
 
+ console.log("------", req.user.userName)
+
   cursor.toArray().then(function (fileArr) {
     if (fileArr.length === 0) { next() }
     fileArr.forEach(function (doc, index) {
@@ -455,6 +457,18 @@ module.exports = [
     deleteFileById_: deleteFileById,
 
   },
+
+  {
+    ...createFileManager(connSzwb3DB, "avatar"),
+    uploadFile_: uploadFile,
+    downloadFile_: downloadFile,
+    deleteFileById_: deleteFileById,
+
+
+  },
+
+
+
   // {
   //   ...createFileManager(connSzwb3DB, "pic_uploads"),
   //   uploadFile_: uploadFile,

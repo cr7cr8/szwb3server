@@ -53,14 +53,14 @@ router.put("/", function (req, res, next) {
   const arrPos = "voteCountArr." + req.body.choicePos
 
  // console.log("====>",arrPos)
-
+// Message.updateMany({}, { "$pull": { waitingUsers: { "$in": [req.userName] } } })
   VoteBlock.updateMany({ _id: req.body.postID }, {
    
 
     "$inc": { [arrPos]: 1 }, //"$inc": { "voteCountArr.$[keyName]": 1 },
 
     "$addToSet": { whoVoted: req.body.userName }
-
+   
 
   }).then((doc) => {
    // console.log(doc)
