@@ -12,11 +12,19 @@ const userSchema = new mongoose.Schema({
     //     validate: [(val) => { return /\d{3}-\d{3}-\d{4}/.test(val) }, "please enter a valid userName"],
 
   },
+  hasAvatar: {
+    type: Boolean,
+    default: false
+  },
+  colorName: {
+    type: String,
+    default: null
+  }
 },
   {
     toObject: { virtuals: true },
     collection: "users",
-    timestamps: true,
+    //timestamps: true,
   }
 )
 
@@ -93,6 +101,7 @@ userSchema.virtual("userArticle", {
   foreignField: "ownerName",
   //  foreignField:function(poster){ console.log("***",poster); return "bbb" },
   ref: "articles",
+  count: true,
   justOne: false
 })
 
