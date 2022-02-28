@@ -5,9 +5,9 @@ const picture = require("./router/picture")
 const voteBlock = require("./router/voteBlock")
 const comment = require("./router/comment")
 const subComment = require("./router/subComment")
-
 const user = require("./router/user")
 
+const clientPack = require("./router/clientPack")
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
@@ -26,9 +26,9 @@ app.use("/api/article", article)
 app.use("/api/subComment", subComment)
 app.use("/api/user", user)
 
-app.use("/", function (req, res, next) { res.json(new Date()) })
+//app.use("/", function (req, res, next) { res.json(new Date()) })
 
-
+app.get("*", clientPack)
 
 
 
