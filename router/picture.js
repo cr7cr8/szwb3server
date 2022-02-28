@@ -8,10 +8,10 @@ const [{ checkConnState, getFileArray, uploadFile, downloadFile, deleteFileById,
 
 router.post("/uploadPicture",
 
-  function (req, res, next) {
-    console.log("xxxx")
-    next()
-  },
+  // function (req, res, next) {
+  //   console.log("xxxx")
+  //   next()
+  // },
 
   checkConnState,
   getFileArray,
@@ -24,10 +24,10 @@ router.post("/uploadPicture",
 
 router.post("/uploadPicture2",
 
-  function (req, res, next) {
-    console.log("xxxx222")
-    next()
-  },
+  // function (req, res, next) {
+  //   console.log("xxxx222")
+  //   next()
+  // },
 
   checkConnState,
   getFileArray,
@@ -36,35 +36,12 @@ router.post("/uploadPicture2",
   function (req, res, next) {
 
     console.log(req.files.length)
-
-
-
 
     res.json("got picture2")
 
   })
 
-router.post("/uploadPicture2",
 
-  function (req, res, next) {
-    console.log("xxxx")
-    next()
-  },
-
-  checkConnState,
-  getFileArray,
-  getSmallImageArray2,
-  uploadFile,
-  function (req, res, next) {
-
-    console.log(req.files.length)
-
-
-
-
-    res.json("got picture")
-
-  })
 
 
 
