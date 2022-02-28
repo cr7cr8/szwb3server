@@ -12,12 +12,12 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 //if (!process.env.port) {
-  const cors = require("cors");
+//  const cors = require("cors");
 //  app.use(cors());
 //}
 
-//app.use("/api/article", article)
-
+const cors = require("cors");
+app.use(cors());
 
 app.use("/api/picture", picture)
 app.use("/api/voteBlock", voteBlock)
@@ -26,11 +26,11 @@ app.use("/api/article", article)
 app.use("/api/subComment", subComment)
 app.use("/api/user", user)
 
-app.use("/",function(req,res,next){
+app.use("/", function (req, res, next) { res.json(new Date()) })
 
-  res.json(new Date())
 
-})
+
+
 
 // app.get("/", function (req, res, next) {
 //   res.send("fdsf")
