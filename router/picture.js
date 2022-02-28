@@ -45,7 +45,15 @@ router.post("/uploadPicture2",
 
 
 
-router.get("/downloadPicture/:filename", checkConnState, downloadFile)
+router.get("/downloadPicture/:filename", 
+
+
+function(req,res,next){
+console.log("download pic")
+next()
+},
+
+checkConnState, downloadFile)
 
 
 
