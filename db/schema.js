@@ -19,6 +19,10 @@ const userSchema = new mongoose.Schema({
   colorName: {
     type: String,
     default: null
+  },
+  description:{
+    type:String,
+    default:"nothing written yet."
   }
 },
   {

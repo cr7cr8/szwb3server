@@ -18,19 +18,11 @@ router.post("/uploadPicture",
   getSmallImageArray,
   uploadFile,
   function (req, res, next) {
-
     console.log(req.files.length)
-
-
-
-
     res.json("got picture")
-
   })
 
-
-
-  router.post("/uploadPicture2",
+router.post("/uploadPicture2",
 
   function (req, res, next) {
     console.log("xxxx222")
@@ -51,7 +43,6 @@ router.post("/uploadPicture",
     res.json("got picture2")
 
   })
-
 
 router.post("/uploadPicture2",
 

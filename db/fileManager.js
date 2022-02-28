@@ -467,6 +467,15 @@ module.exports = [
 
   },
 
+  {
+    ...createFileManager(connSzwb3DB, "banerPic"),
+    uploadFile_: uploadFile,
+    downloadFile_: downloadFile,
+    deleteFileById_: deleteFileById,
+
+
+  },
+
 
 
   // {

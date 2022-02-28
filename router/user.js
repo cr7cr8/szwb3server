@@ -9,7 +9,17 @@ const { connSzwb3DB } = require("../db/db")
 
 const [
   { },
-  { checkConnState, getFileArray, uploadFile, downloadFile, deleteFileById, deleteOldFile, downloadFileByName, getSmallImageArray, getSmallImageArray2, deleteFileByUserName }
+  { checkConnState, getFileArray, uploadFile, downloadFile, deleteFileById, deleteOldFile, downloadFileByName, getSmallImageArray, getSmallImageArray2, deleteFileByUserName },
+  { checkConnState: checkConnState2_,
+    getFileArray: getFileArray2_,
+    uploadFile: uploadFile2_,
+    downloadFile: downloadFile2_,
+    deleteFileById: deleteFileById2_,
+    deleteOldFile: deleteOldFile2_,
+    downloadFileByName: downloadFileByName2_,
+    // getSmallImageArray: getSmallImageArray2_,
+    getSmallImageArray2: getSmallImageArray22_,
+    deleteFileByUserName: deleteFileByUserName2_ }
 ]
   = require("../db/fileManager");
 
@@ -29,7 +39,7 @@ router.put("/updateUserName",
 
 
   function (req, res, next) {
-  //  console.log(req.body)
+    //  console.log(req.body)
     User.updateMany(
       { userName: req.body.userName },
       {
@@ -122,7 +132,7 @@ router.put("/updateUserName",
         }
       }]
     ).then(docs => {
-    //  res.json("done")
+      //  res.json("done")
     })
 
     connSzwb3DB.collection("subComments").updateMany({ content: { $regex: regexObj } },
@@ -135,7 +145,7 @@ router.put("/updateUserName",
         }
       }]
     ).then(docs => {
-     // res.json("done")
+      // res.json("done")
     })
 
 
@@ -185,7 +195,7 @@ router.post("/regist", function (req, res, next) {
     if (!doc) {
       User.create({ ...req.body }).then(doc => {
 
-   //     console.log(doc)
+        //     console.log(doc)
         res.json(doc)
       })
     } else {
@@ -226,7 +236,7 @@ router.post("/uploadAvatar",
 
     req.header["user"] = { userName: obj.ownerName }
     req.user = { userName: obj.ownerName }
- //   console.log("reqbody", req.user)
+    //   console.log("reqbody", req.user)
 
 
     next()
@@ -243,6 +253,57 @@ router.post("/uploadAvatar",
 
   })
 
+router.post("/uploadBanerPic",
+
+
+  checkConnState2_,
+  getFileArray2_,
+
+  getSmallImageArray22_,
+  function (req, res, next) {
+
+
+    // req.body.obj = typeof (req.body.obj) === "string" ? JSON.parse(req.body.obj) : req.body.obj
+
+    const obj = typeof (req.body.obj) === "string" ? JSON.parse(req.body.obj) : req.body.obj
+
+    req.header["user"] = { userName: obj.ownerName }
+    req.user = { userName: obj.ownerName }
+    //   console.log("reqbody", req.user)
+
+
+    next()
+  },
+
+  deleteFileByUserName2_,
+  uploadFile2_,
+  function (req, res, next) {
+    res.json("got banerPic")
+    // User.updateOne({ userName: req.user.userName }, { hasAvatar: true }).then(doc => {
+    //   res.json("got banerPic")
+    // })
+  })
+
+
+router.post("/updateDescription", function (req, res, next) {
+  User.updateOne({ userName: req.body.userName }, { description: req.body.description }).then(doc => {
+    res.json("description updated")
+  })
+
+})
+
+router.get("/userDescription:userName/:random?", function (req, res, next) {
+  User.findOne({ userName: req.params.userName }).then(doc => {
+    res.json(doc.description)
+  })
+
+})
+
+
+router.get("/downloadBanerPic/:filename/:random?",
+  checkConnState2_,
+  downloadFile2_
+)
 
 
 
