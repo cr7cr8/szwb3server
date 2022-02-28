@@ -66,7 +66,7 @@ router.get("/getOne/:beforeTime?", async function (req, res, next) {
 
    // res.json([])
 
-  Article.find({ postingTime: { $lt: req.params.beforeTime } }).sort({ postingTime: -1 }).limit(1).populate("commentNum").exec()
+  Article.find({ postingTime: { $lt: req.params.beforeTime } }).sort({ postingTime: -1 }).limit(5).populate("commentNum").exec()
 
     .then((docs) => {
 
@@ -88,7 +88,7 @@ router.get("/getPersonOne/:ownerName/:beforeTime?", async function (req, res, ne
 
   //console.log(req.params.ownerName,Date.now())
 
-  Article.find({ postingTime: { $lt: req.params.beforeTime }, ownerName: req.params.ownerName }).sort({ postingTime: -1 }).limit(1).populate("commentNum").exec()
+  Article.find({ postingTime: { $lt: req.params.beforeTime }, ownerName: req.params.ownerName }).sort({ postingTime: -1 }).limit(5).populate("commentNum").exec()
 
     .then((docs) => {
 
