@@ -292,9 +292,9 @@ router.post("/updateDescription", function (req, res, next) {
 
 })
 
-router.get("/userDescription:userName/:random?", function (req, res, next) {
+router.get("/userDescription/:userName/:random?", function (req, res, next) {
   User.findOne({ userName: req.params.userName }).then(doc => {
-    res.json(doc.description)
+    res.json(doc&&doc.description)
   })
 
 })
