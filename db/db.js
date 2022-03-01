@@ -8,8 +8,11 @@ mongoose.connection.on('error', function (err) {
 const { connSzwb3DB, connEmojiDB, connPictureDB, connParam } = {
 
   //EmojiDB: "mongodb+srv://boss:ABCabc123@cluster0-lsf8g.azure.mongodb.net/EmojiDB?retryWrites=true&w=majority",
-  szwb3DB: "mongodb+srv://boss:ABCabc123@cluster0-lsf8g.azure.mongodb.net/szwb3?retryWrites=true&w=majority",
+  //szwb3DB: "mongodb+srv://boss:ABCabc123@cluster0-lsf8g.azure.mongodb.net/szwb3?retryWrites=true&w=majority",
   //pictureDB: "mongodb+srv://boss:ABCabc123@cluster0-lsf8g.azure.mongodb.net/pictureDB?retryWrites=true&w=majority",
+
+  szwb3DB:"mongodb+srv://boss:ABCabc123@cluster0.l7owv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+
 
   connParam: { useNewUrlParser: true, useUnifiedTopology: true, /*poolSize:10*/ },
 
