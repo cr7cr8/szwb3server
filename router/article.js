@@ -65,7 +65,7 @@ router.get("/getOne/:beforeTime?", async function (req, res, next) {
 
   Article.find({ postingTime: { $lt: req.params.beforeTime } }).sort({ postingTime: -1 }).limit(5).populate("commentNum").exec()
     .then((docs) => {
-      // console.log(docs)
+       console.log(docs)
       res.json(docs.map(doc => { return { ...doc._doc, commentNum: doc.commentNum } }))
     })
 
