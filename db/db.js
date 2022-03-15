@@ -13,6 +13,7 @@ const { connSzwb3DB, connEmojiDB, connPictureDB, connParam } = {
 
   szwb3DB:"mongodb+srv://boss:ABCabc123@cluster0.l7owv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
 
+  //szwb3DB:"mongodb+srv://boss:ABCabc123@cluster0.mnthh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
 
   connParam: { useNewUrlParser: true, useUnifiedTopology: true, /*poolSize:10*/ },
 
