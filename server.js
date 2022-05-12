@@ -28,13 +28,13 @@ app.use("/api/user", user)
 
 //app.use("/", function (req, res, next) { res.json(new Date()) })
 
-//app.get("*", clientPack)
+app.get("*", clientPack)
 
-app.get("*", (req, res, next) => {
+// app.get("*", (req, res, next) => {
 
-    res.send(`<h1>${new Date()}</h1>`)
+//     res.send(`<h1>${new Date()}</h1>`)
 
-})
+// })
 
 // app.get("/", function (req, res, next) {
 //   res.send("fdsf")
