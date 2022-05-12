@@ -11,7 +11,9 @@ const { connSzwb3DB, connEmojiDB, connPictureDB, connParam } = {
   //szwb3DB: "mongodb+srv://boss:ABCabc123@cluster0-lsf8g.azure.mongodb.net/szwb3?retryWrites=true&w=majority",
   //pictureDB: "mongodb+srv://boss:ABCabc123@cluster0-lsf8g.azure.mongodb.net/pictureDB?retryWrites=true&w=majority",
 
-  szwb3DB:"mongodb+srv://boss:ABCabc123@cluster0.l7owv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+  //szwb3DB:"mongodb+srv://boss:ABCabc123@cluster0.l7owv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+
+  szwb3DB:"mongodb+srv://boss:ABCabc123@cluster0.buo7i.mongodb.net/szwb3DB?retryWrites=true&w=majority",
 
   //szwb3DB:"mongodb+srv://boss:ABCabc123@cluster0.mnthh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
 
