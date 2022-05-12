@@ -6,7 +6,7 @@ const voteBlock = require("./router/voteBlock")
 const comment = require("./router/comment")
 const subComment = require("./router/subComment")
 const user = require("./router/user")
- 
+
 const clientPack = require("./router/clientPack")
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }))
 //  const cors = require("cors");
 //  app.use(cors());
 //}
- console.log("xx")
+console.log("xx")
 const cors = require("cors");
 app.use(cors());
 
@@ -28,9 +28,13 @@ app.use("/api/user", user)
 
 //app.use("/", function (req, res, next) { res.json(new Date()) })
 
-app.get("*", clientPack)
+//app.get("*", clientPack)
 
- 
+app.get("*", (req, res, next) => {
+
+    res.send(`<h1>${new Date()}</h1>`)
+
+})
 
 // app.get("/", function (req, res, next) {
 //   res.send("fdsf")
